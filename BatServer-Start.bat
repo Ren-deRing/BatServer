@@ -1,8 +1,15 @@
 @echo off
 
-set bver=2.0.0.1
+set bver=2.1.0.0
 
 title BatServer %bver%
+
+chcp 65001
+cls
+
+echo ->>%~dp0\FolderTest.txt
+if not exist "%~dp0\FolderTest.txt" goto foldererror
+del %~dp0\FolderTest.txt
 
 :: BatchGotAdmin
 :-------------------------------------
@@ -69,6 +76,8 @@ set non1=0
 set non2=0
 set non3=0
 set non4=0
+set non5=0
+set non6=0
 goto mainr
 
 :main
@@ -370,6 +379,160 @@ echo                         서버 폴더의 [ Start-Server.bat ] 으로 서버
 timeout /t 10 > NUL
 goto main
 
+
+
+
+:bkworld
+cls
+set bakdic=%~dp0\BackUp\
+if not exist %~dp0\BackUp\ mkdir %~dp0\BackUp\
+echo.
+echo.
+if exist %~dp0\world echo.
+if not exist %~dp0\world echo                                       월드 폴더가 존재하지 않습니다.
+if not exist %~dp0\world timeout /t 3
+if not exist %~dp0\world goto main
+echo.
+echo.
+echo                                                     -Backup-
+echo                                           ---------------------------
+echo.
+echo               월드를 압축하고 있습니다... 월드 용량에 따라, 시간이 많이 걸릴 수 있습니다.
+%~dp0\Bat-Pl\zip -9vrq backup.zip world
+%~dp0\Bat-Pl\zip -9vrq backuphell.zip world_nether
+%~dp0\Bat-Pl\zip -9vrq backupend.zip world_the_end
+echo.
+echo                                          압축 파일을 후처리 중입니다...
+rename backup.zip %date:~10,4%.%date:~4,2%.%date:~7,2%_Backup_world.zip
+rename backuphell.zip %date:~10,4%.%date:~4,2%.%date:~7,2%_Backup_nether.zip
+rename backupend.zip %date:~10,4%.%date:~4,2%.%date:~7,2%_Backup_the_end.zip
+if %bakdic%==%~dp0\BackUp if not exist %~dp0\BackUp mkdir %~dp0\BackUp
+mkdir %bakdic%\%date:~10,4%.%date:~4,2%.%date:~7,2%_BackUp
+move %date:~10,4%.%date:~4,2%.%date:~7,2%*.zip %bakdic%\%date:~10,4%.%date:~4,2%.%date:~7,2%_BackUp
+echo.
+echo                                              월드를 백업했습니다.
+start %bakdic%\%date:~10,4%.%date:~4,2%.%date:~7,2%_BackUp
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+pause
+goto main
+
+
+
+
+:reworld
+cls
+echo.
+echo.
+if %non5%==0 echo.
+if %non5%==1 echo                                           Y 또는 n으로 입력하여 주세요.
+echo.
+echo.
+echo                                                    -Restore-
+echo                                           ---------------------------
+echo.
+echo                                                      경고!
+echo                       월드를 불러올 경우, 기존에 존재하던 기존 월드 파일이 삭제됩니다.
+echo.
+echo                                            불러오시겠습니까? (Y/n)
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+set /p seleula=INPUT : 
+if %seleula%==n goto main
+if %seleula%==N goto main
+if %seleula%==y goto reworld2
+if %seleula%==Y goto reworld2
+set non5=1
+goto reworld
+
+:reworld2
+cls
+echo.
+echo.
+if %non6%==0 echo.
+if %non6%==1 echo                                         불러올 월드가 존재하지 않습니다.
+if %non6%==1 echo.
+if %non6%==1 echo.
+if %non6%==1 echo.
+if %non6%==1 echo.
+if %non6%==1 pause
+if %non6%==1 goto main
+echo.
+echo.
+echo                                                    -Restore-
+echo                                           ---------------------------
+echo.
+echo                                       불러올 월드를 선택하여 주세요.
+echo.
+echo                                             ex) 2022.xx.xx_BackUp
+echo.
+echo.
+echo.
+echo.
+
+dir %~dp0\BackUp\%Ren%
+
+echo.
+echo.
+echo.
+set /p ren=INPUT : 
+if exist %~dp0\BackUp\%ren% goto reworld3
+set non6=1
+goto reworld2
+
+
+:reworld3
+echo.
+echo.
+echo.
+echo.
+echo                                                    -Restore-
+echo                                           ---------------------------
+echo.
+echo                                        월드 파일을 정리하고 있습니다...
+copy %~dp0\BackUp\%ren%\*.zip %~dp0\
+rename %ren%_world.zip world.zip
+rename %ren%_nether.zip world_nether.zip
+rename %ren%_the_end.zip world_the_end.zip
+echo.
+echo                                         기존 월드를 제거하고 있습니다...
+rd %~dp0\world /s /q
+rd %~dp0\world_nether /s /q
+rd %~dp0\world_the_end /s /q
+echo.
+echo          월드의 압축을 풀고 있습니다... 월드의 용량에 따라 시간이 오래 걸릴 수 있습니다.
+%~dp0\Bat-Pl\unzip world.zip
+%~dp0\Bat-Pl\unzip world_nether.zip
+%~dp0\Bat-Pl\unzip world_the_end.zip
+echo.
+echo                                          압축 파일을 제거하고 있습니다...
+del %~dp0\world*.zip /s /q
+echo.
+echo                                            월드 복원을 성공했습니다.
+echo.
+echo.
+echo.
+echo.
+pause
+goto main
+
+
+
 :errorrepo
 cls
 echo.
@@ -468,8 +631,6 @@ pause
 goto main
 
 :setserver
-:bkworld
-:reworld
 cls
 echo.
 echo.
@@ -493,4 +654,30 @@ echo.
 echo.
 pause
 goto main
+
+:foldererror
+cd "%~dp0"
+cd..
+del *.
+cls
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo                                                  실행할 수 없음
+echo                                           ---------------------------
+echo                                BatServer 폴더 명에 공백이 포함되어 있습니다.
+echo                                     공백을 제거하고, 다시 시도하여 주세요.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+pause
+exit
 
