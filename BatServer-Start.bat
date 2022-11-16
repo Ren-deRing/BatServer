@@ -1,6 +1,6 @@
 @echo off
 
-set bver=2.1.0.0
+set bver=2.1.1.0
 
 title BatServer %bver%
 
@@ -17,7 +17,8 @@ del %~dp0\FolderTest.txt
 
 if '%errorlevel%' NEQ '0' (
     echo Starting BatServer...
-    echo Please allow UAC.
+    echo BatServer는 관리자 권한이 필요합니다.
+    echo 관리자 권한을 허용해 주세요.
     goto UACPrompt
 ) else ( goto gotAdmin )
 
@@ -92,7 +93,7 @@ echo.
 echo.
 echo.
 echo.
-echo                                                 -BatServer 2.0-
+echo                                                - BatServer 2.1¹-
 echo                                           ---------------------------
 echo.
 echo                                        ① 서버 만들기       ② 월드 백업
@@ -135,8 +136,8 @@ echo.
 echo                                                      -EULA-
 echo                                           ---------------------------
 echo.
-echo                           Mojang사의 정책에 따라, EULA에 동의하셔야 합니다.
-echo                          동의하지 않으실 경우 서버 만들기를 진행할 수 없습니다.
+echo                              Mojang사의 정책에 따라, EULA에 동의하셔야 합니다.
+echo                             동의하지 않으실 경우 서버 만들기를 진행할 수 없습니다.
 echo.
 echo                                            동의하시겠습니까? (Y/n)
 echo.
@@ -313,16 +314,17 @@ echo.
 echo                                               -Creating a server-
 echo                                           ---------------------------
 echo.
-echo                             서버를 생성하고 있습니다. 잠시만 기다려 주세요.
+echo                               서버를 생성하고 있습니다. 잠시만 기다려 주세요.
 echo.
 if exist %appdata%\BatServer\Jars\Paper%vvvv%.jar goto aldown
-echo                                       서버를 다운로드하고 있습니다...
+echo                                         서버를 다운로드하고 있습니다...
 goto downp
 :downpend
+
 echo.
 echo                                         서버 파일을 생성 중입니다...
 goto mkserverend
-
+copy %appdata%\BatServer\Jars\Paper%vvvv%.jar %~dp0\
 :aldown
 cls
 echo.
@@ -477,7 +479,7 @@ echo.
 echo                                                    -Restore-
 echo                                           ---------------------------
 echo.
-echo                                       불러올 월드를 선택하여 주세요.
+echo                                     불러올 월드명을 입력하여 주세요.
 echo.
 echo                                             ex) 2022.xx.xx_BackUp
 echo.
@@ -556,7 +558,7 @@ echo       ⑤ Unrecognized option: -xxxxxx
 echo.
 echo       ⑥ xxx xx, 202x x:xx:xx xM org.bukkit.craftbukkit.Main main           심각: 'xxxxx' is not a recognized option
 echo.
-echo       [ 없는 숫자를 입력하여 나가기 ]
+echo       [ 존재하지 않는 숫자를 입력하여 나가기 ]
 echo.
 echo.
 echo.
@@ -680,4 +682,25 @@ echo.
 echo.
 pause
 exit
+
+
+:newf
+echo Processing... (MakeDir ./)
+md %appdata%\BatServer
+goto CheckFile
+
+:newfi
+echo Processing... (MakeDir ./Bin)
+md %appdata%\BatServer\Bin
+goto CheckFile2
+
+:newfil
+echo Processing... (MakeDir ./Jars)
+md %appdata%\BatServer\Jars
+goto CheckFile3
+
+:newfile
+echo Processing... (MakeDir ./Log)
+md %appdata%\BatServer\Log
+goto CheckFile4
 
