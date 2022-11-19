@@ -323,8 +323,9 @@ goto downp
 
 echo.
 echo                                         서버 파일을 생성 중입니다...
-goto mkserverend
 copy %appdata%\BatServer\Jars\Paper%vvvv%.jar %~dp0\
+goto mkserverend
+
 :aldown
 cls
 echo.
