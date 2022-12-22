@@ -1,6 +1,6 @@
 @echo off
 
-set bver=2.1.1.0
+set bver=2.1.1.1
 
 title BatServer %bver%
 
@@ -323,9 +323,8 @@ goto downp
 
 echo.
 echo                                         서버 파일을 생성 중입니다...
-copy %appdata%\BatServer\Jars\Paper%vvvv%.jar %~dp0\
 goto mkserverend
-
+copy %appdata%\BatServer\Jars\Paper%vvvv%.jar %~dp0\
 :aldown
 cls
 echo.
