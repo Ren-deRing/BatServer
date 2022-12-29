@@ -1,6 +1,6 @@
 @echo off
 
-set bver=2.1.1.1
+set bver=2.1.2.0
 
 title BatServer %bver%
 
@@ -79,6 +79,11 @@ set non3=0
 set non4=0
 set non5=0
 set non6=0
+set selmain=0
+set seleula=0
+set selver=0
+set ram=0
+set selre=0
 goto mainr
 
 :main
@@ -88,7 +93,7 @@ cls
 echo.
 echo.
 if %non1%==0 echo.
-if %non1%==1 echo                                         1부터 4의 숫자를 입력해 주세요.
+if %non1%==1 echo                                         1부터 5의 숫자를 입력해 주세요.
 echo.
 echo.
 echo.
@@ -114,6 +119,7 @@ if %selmain%==2 goto bkworld
 if %selmain%==3 goto reworld
 if %selmain%==4 goto setserver
 if %selmain%==5 goto errorrepo
+if %selmain%==6 goto credits
 
 set non1=1
 goto mainr
@@ -171,7 +177,7 @@ echo.
 echo                                                 -Select version-
 echo                                           ---------------------------
 echo.
-echo                                    1.19.2           1.18.2           1.17.1
+echo                                    1.19.3           1.18.2           1.17.1
 echo.
 echo                                    1.16.5           1.15.2           1.14.4
 echo.
@@ -186,7 +192,7 @@ echo.
 echo.
 echo.
 set /p selver= INPUT : 
-if %selver%==1.19.2 goto mkserver2
+if %selver%==1.19.3 goto mkserver2
 if %selver%==1.18.2 goto mkserver2
 if %selver%==1.17.1 goto mkserver2
 if %selver%==1.16.5 goto mkserver2
@@ -295,7 +301,7 @@ goto mkserver2
 
 :mkserver3
 cls
-if %selver%==1.19.2 set vvvv=19
+if %selver%==1.19.3 set vvvv=19
 if %selver%==1.18.2 set vvvv=18
 if %selver%==1.17.1 set vvvv=17
 if %selver%==1.16.5 set vvvv=16
@@ -345,7 +351,7 @@ echo                                          서버 파일을 생성 중입니�
 goto mkserverend
 
 :downp
-if %selver%==1.19.2 powershell "(New-Object System.Net.WebClient).DownloadFile('https://api.papermc.io/v2/projects/paper/versions/1.19.2/builds/125/downloads/paper-1.19.2-125.jar','%appdata%\BatServer\Jars\Paper19.jar')"
+if %selver%==1.19.3 powershell "(New-Object System.Net.WebClient).DownloadFile('https://api.papermc.io/v2/projects/paper/versions/1.19.3/builds/360/downloads/paper-1.19.3-360.jar','%appdata%\BatServer\Jars\Paper19.jar')"
 if %selver%==1.18.2 powershell "(New-Object System.Net.WebClient).DownloadFile('https://api.papermc.io/v2/projects/paper/versions/1.18.2/builds/386/downloads/paper-1.18.2-386.jar','%appdata%\BatServer\Jars\Paper18.jar')"
 if %selver%==1.17.1 powershell "(New-Object System.Net.WebClient).DownloadFile('https://papermc.io/api/v2/projects/paper/versions/1.17.1/builds/408/downloads/paper-1.17.1-408.jar','%appdata%\BatServer\Jars\Paper17.jar')"
 if %selver%==1.16.5 powershell "(New-Object System.Net.WebClient).DownloadFile('https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/794/downloads/paper-1.16.5-794.jar','%appdata%\BatServer\Jars\Paper16.jar')"
@@ -362,6 +368,7 @@ goto downpend
 
 
 :mkserverend
+del Start-Server.bat
 echo @echo off>> Start-Server.bat
 echo echo Starting Server...>> Start-Server.bat
 echo java -jar -Xmx%ram%G Paper%vvvv%.jar>> Start-Server.bat
@@ -454,11 +461,11 @@ echo.
 echo.
 echo.
 echo.
-set /p seleula=INPUT : 
-if %seleula%==n goto main
-if %seleula%==N goto main
-if %seleula%==y goto reworld2
-if %seleula%==Y goto reworld2
+set /p selre=INPUT : 
+if %selre%==n goto main
+if %selre%==N goto main
+if %selre%==y goto reworld2
+if %selre%==Y goto reworld2
 set non5=1
 goto reworld
 
@@ -634,28 +641,54 @@ goto main
 
 :setserver
 cls
+goto main
+echo.
+echo.
+if %non1%==0 echo.
+if %non1%==1 echo                                         1부터 4의 숫자를 입력해 주세요.
 echo.
 echo.
 echo.
 echo.
-echo.
-echo.
-echo                                                  진행할 수 없음
+echo                                                - Setting Menu-
 echo                                           ---------------------------
 echo.
-echo                             이 기능은 아직 사용할 수 없거나, 불안정한 기능입니다.
-echo                                      업데이트가 되면, 다시 시도하여 주세요.
+echo                                        ① 서버 설정         ② 플러그인
 echo.
-echo                                       이 BatServer 버전은 %bver% 입니다.
-echo.
+echo                                        ③ 상세 설정         ④ 도움말
 echo.
 echo.
 echo.
 echo.
 echo.
 echo.
-pause
-goto main
+echo.
+set /p selset=INPUT : 
+if %selset%==1 goto proto
+if %selset%==2 goto plugin
+if %selset%==3 goto moreset
+if %selset%==4 goto info
+
+:credits
+echo --  Development Note
+echo -------------------------------------------------------
+echo Hello!
+echo 제가 Render입니다.
+echo 이 BatServer를 만들며..
+echo 2021년부터 v1을 만들면서
+echo 연구도 하고.. 기능도 만들고..
+echo 참 많이 만들었지만!
+echo v2가 최고인것 같네요.
+echo v2는 기존 1000줄 넘게 있던 소스코드를 정리했고..
+echo 필요없는 기능도 삭제하고, 많이 했죠.
+echo 이 v2도 v1의 소스코드를 많이 차용해서
+echo 고질적인 문제들도 많지만..
+echo v3를 기대해주시면서 기다려주세요.
+echo 그런데 업데이트 기능도 쓸만하지 않나요?
+echo 업데이트 기능 만드느라 좀 고생을 하긴 했지만..
+echo 그래도 파일을 2개로 분할하는걸로 해결했습니다!
+echo 아무튼 사용해주셔서 감사하고!
+echo 저는 이만 물러가겠습니다.
 
 :foldererror
 cd "%~dp0"
