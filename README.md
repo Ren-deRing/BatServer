@@ -14,7 +14,7 @@
   
    
 
- - Korean                                            
+- Korean                                            
 
   BatServer는 Batch를 이용해,                                            
   마인크래프트 서버를 쉽게 만들 수 있는 프로그램입니다.
