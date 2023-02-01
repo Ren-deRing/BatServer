@@ -14,3 +14,4 @@ BatServer-Start.bat 을 실행해주세요.
 메뉴에서 사용하실 항목의 번호를 입력하세요.
 
 [ 관리자 권한을 허용하셔야 정상 작동합니다. ]
+![image](https://user-images.githubusercontent.com/79672833/215923585-c32e7fff-3eb8-4079-aae1-72d4c6743c1b.png)
