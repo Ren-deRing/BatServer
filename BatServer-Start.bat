@@ -49,7 +49,7 @@ echo ##   ##  ##  ###    ###                 ###  ####     ## ##     ## ##   ###
 echo ###  ##  ### ###    ####            ###  ##  ##   ##  ### ##    #####   ##   ##  ### ##
 echo ######   ### ###    ####            ######   #######  ###  ##    ###    #######  ###  ##
 cd %~dp0
-echo Made By Render    Copyright 2021-2022. Render All rights reserved
+echo Made By Render    Copyright 2021-2023. Render All rights reserved
 echo.
 echo Loading BatServer...
 echo.
