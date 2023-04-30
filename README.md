@@ -1,7 +1,7 @@
 # BatServer
  
  
-[ 이 저장소는 더이상 유지/관리되지 않습니다. ]
+[ 이 저장소는 더이상 최소한의 유지/관리 만 이루어집니다. ]
 
 [ 후속 버전은 https://github.com/ClosedDev/MCServerBuilder 를 참조하세요. ]
 
