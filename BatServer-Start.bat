@@ -1,12 +1,13 @@
 @echo off
 
-set bver=2.1.2.0
+set bver=3.0.0.0
 
 title BatServer %bver%
 
 chcp 65001
 cls
 
+:: Folder Name Error Check
 echo ->>%~dp0\FolderTest.txt
 if not exist "%~dp0\FolderTest.txt" goto foldererror
 del %~dp0\FolderTest.txt
@@ -49,29 +50,96 @@ echo ##   ##  ##  ###    ###                 ###  ####     ## ##     ## ##   ###
 echo ###  ##  ### ###    ####            ###  ##  ##   ##  ### ##    #####   ##   ##  ### ##
 echo ######   ### ###    ####            ######   #######  ###  ##    ###    #######  ###  ##
 cd %~dp0
-echo Made By Render    Copyright 2021-2023. Render All rights reserved
-echo.
-echo Loading BatServer...
+echo Made By Render    Copyright 2021-2022. Render All rights reserved
 echo.
 %~dp0\Bat-Pl\cmdclr.exe 0F
-:CheckFile
-echo Cheking File... (./)
-if not exist %appdata%\BatServer goto newf
-:CheckFile2
-echo Cheking File... (./Bin)
-if not exist %appdata%\BatServer\Bin goto newfi
-:CheckFile3
-echo Cheking File... (./Jars)
-if not exist %appdata%\BatServer\Jars goto newfil
-:CheckFile4
-echo Cheking File... (./Log)
-if not exist %appdata%\BatServer\Log goto newfile
+<NUL set /p=Preparing.
+setlocal
+<NUL set /p=.
+set reqgo=%~dp0\bin\req4bat-go.exe
+<NUL set /p=.
+setlocal enabledelayedexpansion
+<NUL set /p=.
+for /f "delims=" %%a in ('"%reqgo% --url https://dummyjson.com/test --slice-json status" 2^>^&1') do (set result=%%a)
+if !result! neq ok (
+    set err_detail=req4bat-go test failed.
+    goto error
+)
+<NUL set /p=.
+<NUL set /p=.ok
 echo.
-echo Loaded!
+<NUL set /p=Checking Folders..
+<NUL set /p=['/'
+if not exist %appdata%\BatServer (
+    mkdir %appdata%\BatServer
+)
+<NUL set /p=, '/jar']
+if not exist %appdata%\BatServer\jar (
+    mkdir %appdata%\BatServer\jar
+)
+<NUL set /p=...ok
+echo.
+<NUL set /p=Loading java/bukkit version information...
+for /f "delims=" %%a in ('"%reqgo% --url https://api.papermc.io/v2/projects/paper --slice-json versions" 2^>^&1') do (set result=%%a)
+if !result! equ error (
+    set err_detail=req4bat-go fetch data failed.
+    goto error
+)
+echo.ok
 timeout /t 1
-
 goto main
 
+:: Error that cannot be ignore handling function, parameter: var err_detail: string
+:error
+cls
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo                                                  Error occurred!!
+echo                                           ---------------------------
+echo                                      처리할 수 없는 오류가 발생하였습니다.
+echo                                    Erorr Detail: %err_detail%
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+pause
+exit
+
+:foldererror
+cd "%~dp0"
+cd..
+del *.
+cls
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo                                                  실행할 수 없음
+echo                                           ---------------------------
+echo                                BatServer 폴더 명에 공백이 포함되어 있습니다.
+echo                                     공백을 제거하고, 다시 시도하여 주세요.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+pause
+exit
+
+:: Variable Reset Function, If it end, then goto :mainr
 :reset
 set non1=0
 set non2=0
@@ -119,7 +187,6 @@ if %selmain%==2 goto bkworld
 if %selmain%==3 goto reworld
 if %selmain%==4 goto setserver
 if %selmain%==5 goto errorrepo
-if %selmain%==6 goto credits
 
 set non1=1
 goto mainr
@@ -230,70 +297,7 @@ echo.
 echo.
 echo.
 set /p ram= INPUT : 
-if %ram%==1 goto mkserver3
-if %ram%==2 goto mkserver3
-if %ram%==3 goto mkserver3
-if %ram%==4 goto mkserver3
-if %ram%==5 goto mkserver3
-if %ram%==6 goto mkserver3
-if %ram%==7 goto mkserver3
-if %ram%==8 goto mkserver3
-if %ram%==9 goto mkserver3
-if %ram%==10 goto mkserver3
-if %ram%==11 goto mkserver3
-if %ram%==12 goto mkserver3
-if %ram%==13 goto mkserver3
-if %ram%==14 goto mkserver3
-if %ram%==15 goto mkserver3
-if %ram%==16 goto mkserver3
-if %ram%==17 goto mkserver3
-if %ram%==18 goto mkserver3
-if %ram%==19 goto mkserver3
-if %ram%==20 goto mkserver3
-if %ram%==21 goto mkserver3
-if %ram%==22 goto mkserver3
-if %ram%==23 goto mkserver3
-if %ram%==24 goto mkserver3
-if %ram%==25 goto mkserver3
-if %ram%==26 goto mkserver3
-if %ram%==27 goto mkserver3
-if %ram%==28 goto mkserver3
-if %ram%==29 goto mkserver3
-if %ram%==30 goto mkserver3
-if %ram%==31 goto mkserver3
-if %ram%==32 goto mkserver3
-if %ram%==33 goto mkserver3
-if %ram%==34 goto mkserver3
-if %ram%==35 goto mkserver3
-if %ram%==36 goto mkserver3
-if %ram%==37 goto mkserver3
-if %ram%==38 goto mkserver3
-if %ram%==39 goto mkserver3
-if %ram%==40 goto mkserver3
-if %ram%==41 goto mkserver3
-if %ram%==42 goto mkserver3
-if %ram%==43 goto mkserver3
-if %ram%==44 goto mkserver3
-if %ram%==45 goto mkserver3
-if %ram%==46 goto mkserver3
-if %ram%==47 goto mkserver3
-if %ram%==48 goto mkserver3
-if %ram%==49 goto mkserver3
-if %ram%==50 goto mkserver3
-if %ram%==51 goto mkserver3
-if %ram%==52 goto mkserver3
-if %ram%==53 goto mkserver3
-if %ram%==54 goto mkserver3
-if %ram%==55 goto mkserver3
-if %ram%==56 goto mkserver3
-if %ram%==57 goto mkserver3
-if %ram%==58 goto mkserver3
-if %ram%==59 goto mkserver3
-if %ram%==60 goto mkserver3
-if %ram%==61 goto mkserver3
-if %ram%==62 goto mkserver3
-if %ram%==63 goto mkserver3
-if %ram%==64 goto mkserver3
+if %ram% geq 1 if %ram% leq 64 goto mkserver3
 set non4=1
 goto mkserver2
 
@@ -301,7 +305,9 @@ goto mkserver2
 
 :mkserver3
 cls
-if %selver%==1.19.3 set vvvv=19
+if %selver%==1.21 set vvvv=21
+if %selver%==1.20.6 set vvvv=20
+if %selver%==1.19.4 set vvvv=19
 if %selver%==1.18.2 set vvvv=18
 if %selver%==1.17.1 set vvvv=17
 if %selver%==1.16.5 set vvvv=16
@@ -668,72 +674,3 @@ if %selset%==1 goto proto
 if %selset%==2 goto plugin
 if %selset%==3 goto moreset
 if %selset%==4 goto info
-
-:credits
-echo --  Development Note
-echo -------------------------------------------------------
-echo Hello!
-echo 제가 Render입니다.
-echo 이 BatServer를 만들며..
-echo 2021년부터 v1을 만들면서
-echo 연구도 하고.. 기능도 만들고..
-echo 참 많이 만들었지만!
-echo v2가 최고인것 같네요.
-echo v2는 기존 1000줄 넘게 있던 소스코드를 정리했고..
-echo 필요없는 기능도 삭제하고, 많이 했죠.
-echo 이 v2도 v1의 소스코드를 많이 차용해서
-echo 고질적인 문제들도 많지만..
-echo v3를 기대해주시면서 기다려주세요.
-echo 그런데 업데이트 기능도 쓸만하지 않나요?
-echo 업데이트 기능 만드느라 좀 고생을 하긴 했지만..
-echo 그래도 파일을 2개로 분할하는걸로 해결했습니다!
-echo 아무튼 사용해주셔서 감사하고!
-echo 저는 이만 물러가겠습니다.
-
-:foldererror
-cd "%~dp0"
-cd..
-del *.
-cls
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                                  실행할 수 없음
-echo                                           ---------------------------
-echo                                BatServer 폴더 명에 공백이 포함되어 있습니다.
-echo                                     공백을 제거하고, 다시 시도하여 주세요.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-pause
-exit
-
-
-:newf
-echo Processing... (MakeDir ./)
-md %appdata%\BatServer
-goto CheckFile
-
-:newfi
-echo Processing... (MakeDir ./Bin)
-md %appdata%\BatServer\Bin
-goto CheckFile2
-
-:newfil
-echo Processing... (MakeDir ./Jars)
-md %appdata%\BatServer\Jars
-goto CheckFile3
-
-:newfile
-echo Processing... (MakeDir ./Log)
-md %appdata%\BatServer\Log
-goto CheckFile4
-

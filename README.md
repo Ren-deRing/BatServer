@@ -1,32 +1,12 @@
 # BatServer
- 
- 
-[ 이 저장소는 더이상 최소한의 유지/관리 만 이루어집니다. ]
-
-[ 후속 버전은 https://github.com/ClosedDev/MCSM 를 참조하세요. ]
+Automatic Minecraft Server Builder
 
 
-- English                                            
+BatServer는 자동으로 마인크래프트 서버 빌드 / 설정을 할수 있게 해줍니다.
 
-  BatServer uses Batch,                                            
-  This is a program that allows you to easily create a Minecraft server.
+사용 방법
 
-  How to use                                            
-  Run BatServer -> Allow administrator rights -> Select menu
+서버를 만들 곳에 ZIP 파일 압축을 푼 뒤,
+BatServer-Start.bat 을 실행해주세요.
 
- 
- 
-  
-   
-
-- Korean                                            
-
-  BatServer는 Batch를 이용해,                                            
-  마인크래프트 서버를 쉽게 만들 수 있는 프로그램입니다.
-
-  사용 방법                                         
-  BatServer 실행 -> 관리자 권한 허용 -> 메뉴 선택
-
-
-
-license : MIT License
+[ 관리자 권한을 허용하셔야 정상 작동합니다. ]
